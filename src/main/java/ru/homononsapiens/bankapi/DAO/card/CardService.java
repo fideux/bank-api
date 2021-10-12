@@ -1,7 +1,11 @@
 package ru.homononsapiens.bankapi.DAO.card;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.homononsapiens.bankapi.DAO.client.Client;
+import ru.homononsapiens.bankapi.utils.Util;
+
 import java.util.List;
 
 @Service
@@ -17,21 +21,30 @@ public class CardService {
         return cardDAO.findAll();
     }
 
-    public void save(Card card) {
+    public List<Card> findAllByAccountId(Long accountId) {
+        return cardDAO.findAllByAccountId(accountId);
+    }
+
+    public JsonNode save(Card card) {
         String number;
         List<Card> list;
 
         do {
-            number = generateCardNumber();
+            number = Util.generateCardNumber();
             list = cardDAO.findByNumber(number);
-            System.out.println(number);
         } while (!list.isEmpty());
 
         card.setNumber(number);
-        cardDAO.save(card);
+        card.setConfirmed(false);
+
+        if (cardDAO.save(card)) {
+            return Util.getMessageAsJsonObject("OK", "Карта успешно создана");
+        }
+
+        return Util.getMessageAsJsonObject("Error", "Ошибка при создании карты. Счет не найден");
     }
 
-    private String generateCardNumber() {
-        return Long.toString((long) (Math.random() * (1_0000_0000_0000_0000L - 1000_0000_0000_0000L)));
+    public void confirm(Card card) {
+        cardDAO.confirm(card.getId());
     }
 }

@@ -15,6 +15,12 @@ public class CardDAO implements DAO<Card, Long> {
         return HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Card", Card.class).list();
     }
 
+    public List<Card> findAllByAccountId(Long accountId) {
+        return HibernateSessionFactory.getSessionFactory().openSession()
+                .createQuery("From Card where confirmed = true and account_id = :account_id", Card.class)
+                .setParameter("account_id", accountId).list();
+    }
+
     @Override
     public Card findById(Long id) {
         return HibernateSessionFactory.getSessionFactory().openSession().get(Card.class, id);
@@ -25,8 +31,15 @@ public class CardDAO implements DAO<Card, Long> {
     }
 
     @Override
-    public Card update(Card entity) {
-        return null;
+    public void update(Card card) {
+    }
+
+    public void confirm(Long id) {
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.createQuery("update Card set confirmed = true where id = :id").setParameter("id", id).executeUpdate();
+        tx1.commit();
+        session.close();
     }
 
     @Override
@@ -34,13 +47,15 @@ public class CardDAO implements DAO<Card, Long> {
     }
 
     @Override
-    public void save(Card card) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-
-        session.save(card);
-
-        tx.commit();
-        session.close();
+    public boolean save(Card card) {
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.save(card);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

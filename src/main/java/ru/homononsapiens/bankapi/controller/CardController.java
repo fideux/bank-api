@@ -1,33 +1,33 @@
 package ru.homononsapiens.bankapi.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.homononsapiens.bankapi.DAO.card.Card;
 import ru.homononsapiens.bankapi.DAO.card.CardService;
 
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Random;
 
 @RestController
-@RequestMapping("client/card")
+@RequestMapping("api/client/card")
 @AllArgsConstructor
 public class CardController {
 
     private final CardService cardService;
 
-    @GetMapping(path = "list")
-    public List<Card> list() {
-        return cardService.findAll();
+    @PostMapping(path = "list")
+    public List<Card> list(@RequestBody Card card) {
+        System.out.println(card);
+        return cardService.findAllByAccountId(card.getAccountId());
     }
 
     @GetMapping(path = "get/{cardId}")
-    public Card get(@PathVariable("cardId") Long id) {
-        return cardService.get(id);
+    public Card get(@PathVariable("cardId") Long cardId) {
+        return cardService.get(cardId);
     }
 
     @PostMapping(path = "add")
-    public void add(@RequestBody Card card) {
-        cardService.save(card);
+    public JsonNode add(@RequestBody Card card) {
+        return cardService.save(card);
     }
 }

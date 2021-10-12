@@ -5,6 +5,7 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.homononsapiens.bankapi.DAO.DAO;
 import ru.homononsapiens.bankapi.DAO.HibernateSessionFactory;
+import ru.homononsapiens.bankapi.DAO.card.Card;
 
 import java.util.List;
 
@@ -20,9 +21,12 @@ public class AccountDAO implements DAO<Account, Long> {
         return HibernateSessionFactory.getSessionFactory().openSession().get(Account.class, id);
     }
 
+    public List<Card> findByNumber(String number) {
+        return HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Account where number = :number").setParameter("number", number).list();
+    }
+
     @Override
-    public Account update(Account entity) {
-        return null;
+    public void update(Account entity) {
     }
 
     @Override
@@ -30,16 +34,16 @@ public class AccountDAO implements DAO<Account, Long> {
     }
 
     @Override
-    public void save(Account account) {
-    }
-
-    public void put(Account account) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction tx = session.beginTransaction();
-
-        session.update(account);
-
-        tx.commit();
-        session.close();
+    public boolean save(Account account) {
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            Transaction tx = session.beginTransaction();
+            session.save(account);
+            tx.commit();
+            session.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

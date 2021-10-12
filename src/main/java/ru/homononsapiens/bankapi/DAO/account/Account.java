@@ -7,12 +7,11 @@ import ru.homononsapiens.bankapi.DAO.DAO;
 
 import javax.persistence.*;
 
+@Entity
 @Getter
 @Setter
-@ToString
-@Entity
 @Table(name = "accounts")
-public abstract class Account implements DAO {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +21,6 @@ public abstract class Account implements DAO {
 
     private Long balance;
 
-    private Long client_id;
+    @Column(name = "client_id")
+    private Long clientId;
 }

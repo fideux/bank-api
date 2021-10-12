@@ -6,10 +6,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+@Entity
 @Getter
 @Setter
 @ToString
-@Entity
 @Table(name = "cards")
 public class Card {
 
@@ -19,8 +19,8 @@ public class Card {
 
     private String number;
 
-    private Long account_id;
+    @Column(name = "account_id")
+    private Long accountId;
 
-    @Transient
-    private boolean confirmed;
+    private Boolean confirmed = false;
 }

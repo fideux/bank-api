@@ -1,7 +1,12 @@
 package ru.homononsapiens.bankapi.DAO.account;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.homononsapiens.bankapi.DAO.operation.Operation;
+import ru.homononsapiens.bankapi.DAO.card.Card;
+import ru.homononsapiens.bankapi.utils.Util;
+
 import java.util.List;
 
 @Service
@@ -17,7 +22,27 @@ public class AccountService {
         return accountDAO.findAll();
     }
 
-    public void put(Account account) {
-        accountDAO.put(account);
+    public JsonNode checkBalanceByAccountId(Long id) {
+        Account account = accountDAO.findById(id);
+        return (account == null)
+                ? Util.getMessageAsJsonObject("Error", "Счет не найден")
+                : Util.getMessageAsJsonObject("Balance", account.getBalance().toString());
+    }
+
+    public JsonNode save(Account account) {
+        String number;
+        List<Card> list;
+
+        do {
+            number = Util.generateAccountNumber();
+            list = accountDAO.findByNumber(number);
+        } while (!list.isEmpty());
+
+        account.setNumber(number);
+
+        if (accountDAO.save(account)) {
+            return Util.getMessageAsJsonObject("OK", "Счет успешно открыт");
+        }
+        return Util.getMessageAsJsonObject("Error", "Ошибка при создании счета");
     }
 }
