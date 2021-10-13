@@ -9,12 +9,9 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.h2.Driver</property>
-        <property name="connection.url">jdbc:h2:./src/main/resources/database/bank</property>
+        <property name="connection.url">jdbc:h2:./database/bank</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
-
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">2</property>
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.H2Dialect</property>
@@ -22,11 +19,7 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
-        <!-- Drop and re-create the database schema on startup -->
-<!--        <property name="hbm2ddl.auto">create</property>-->
-
-
-<!--        <mapping class="ru.homononsapiens.bankapi.dao.account.Account" />-->
+<!--        <mapping class="ru.homononsapiens.bankapi.model.Account" />-->
 
     </session-factory>
 

@@ -3,12 +3,12 @@ package ru.homononsapiens.bankapi.dao;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import ru.homononsapiens.bankapi.dao.account.Account;
-import ru.homononsapiens.bankapi.dao.card.Card;
-import ru.homononsapiens.bankapi.dao.client.Client;
-import ru.homononsapiens.bankapi.dao.partner.Partner;
-import ru.homononsapiens.bankapi.dao.payment.Payment;
-import ru.homononsapiens.bankapi.dao.refill.Refill;
+import ru.homononsapiens.bankapi.model.Account;
+import ru.homononsapiens.bankapi.model.Card;
+import ru.homononsapiens.bankapi.model.Client;
+import ru.homononsapiens.bankapi.model.Partner;
+import ru.homononsapiens.bankapi.model.Payment;
+import ru.homononsapiens.bankapi.model.Refill;
 
 public class HibernateSessionFactory {
 

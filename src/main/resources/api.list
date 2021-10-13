@@ -6,9 +6,14 @@
     "Добавление контрагента": "http://localhost:8080/api/client/partner/add",
     "Просмотр контрагентов": "http://localhost:8080/api/client/partner/list",
     "Перевод средств контрагенту": "http://localhost:8080/api/client/partner/payment",
-
-
-
-
-    "": "http://localhost:8080/api/",
+    "Добавление нового клиента": "http://localhost:8080/api/employee/client/add",
+    "Открытие счета": "http://localhost:8080/api/employee/client/account/open",
+    "Подтверждение выпуска карты": "http://localhost:8080/api/employee/client/card/confirm",
+    "Подтверждение операции пополнения: "http://localhost:8080/api/employee/client/refill/confirm",
+    "Подтверждение операции перевода средств контрагенту": "http://localhost:8080/api/employee/client/payment/confirm",
+    "Список клиентов": "http://localhost:8080/api/employee/client/list",
+    "Список счетов": "http://localhost:8080/api/employee/client/account/list",
+    "Список выпущенных карт": "http://localhost:8080/api/employee/client/card/list",
+    "Список операций пополнений": "http://localhost:8080/api/employee/client/refill/list",
+    "Список операций перевода средств контрагенту": "http://localhost:8080/api/employee/client/payment/list",
 }

@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface Dao<E, K> {
 
-    List<E> findAll();
+    List<E> getAll();
 
-    E findById(K id);
+    E get(K id);
 
-    void update(E entity);
+    boolean update(E entity);
 
-    void delete(K id);
+    boolean delete(K id);
 
     boolean save(E entity);
 }

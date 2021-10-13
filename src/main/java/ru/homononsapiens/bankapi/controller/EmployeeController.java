@@ -3,16 +3,16 @@ package ru.homononsapiens.bankapi.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.homononsapiens.bankapi.dao.account.Account;
-import ru.homononsapiens.bankapi.dao.account.AccountService;
-import ru.homononsapiens.bankapi.dao.card.Card;
-import ru.homononsapiens.bankapi.dao.card.CardService;
-import ru.homononsapiens.bankapi.dao.client.Client;
-import ru.homononsapiens.bankapi.dao.client.ClientService;
-import ru.homononsapiens.bankapi.dao.payment.Payment;
-import ru.homononsapiens.bankapi.dao.payment.PaymentService;
-import ru.homononsapiens.bankapi.dao.refill.Refill;
-import ru.homononsapiens.bankapi.dao.refill.RefillService;
+import ru.homononsapiens.bankapi.model.Account;
+import ru.homononsapiens.bankapi.service.AccountService;
+import ru.homononsapiens.bankapi.model.Card;
+import ru.homononsapiens.bankapi.service.CardService;
+import ru.homononsapiens.bankapi.model.Client;
+import ru.homononsapiens.bankapi.service.ClientService;
+import ru.homononsapiens.bankapi.model.Payment;
+import ru.homononsapiens.bankapi.service.PaymentService;
+import ru.homononsapiens.bankapi.model.Refill;
+import ru.homononsapiens.bankapi.service.RefillService;
 import java.util.List;
 
 @RestController
@@ -46,24 +46,24 @@ public class EmployeeController {
      * Подтверждение выпуска карты
      */
     @PostMapping(path = "card/confirm")
-    public void confirmCard(@RequestBody Card card) {
-        cardService.confirm(card);
+    public JsonNode confirmCard(@RequestBody Card card) {
+        return cardService.confirm(card);
     }
 
     /**
      * Подтверждение операции пополнения
      */
     @PostMapping(path = "refill/confirm")
-    public void confirmRefill(@RequestBody Refill refill) {
-        refillService.confirm(refill);
+    public JsonNode confirmRefill(@RequestBody Refill refill) {
+        return refillService.confirm(refill);
     }
 
     /**
      * Подтверждение операции перевода средств контрагенту
      */
     @PostMapping(path = "payment/confirm")
-    public void confirmPayment(@RequestBody Payment payment) {
-        paymentService.confirm(payment);
+    public JsonNode confirmPayment(@RequestBody Payment payment) {
+        return paymentService.confirm(payment);
     }
 
     /**

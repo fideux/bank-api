@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.homononsapiens.bankapi.dao.account.Account;
-import ru.homononsapiens.bankapi.dao.account.AccountService;
-import ru.homononsapiens.bankapi.dao.card.Card;
-import ru.homononsapiens.bankapi.dao.card.CardService;
-import ru.homononsapiens.bankapi.dao.client.Client;
-import ru.homononsapiens.bankapi.dao.partner.Partner;
-import ru.homononsapiens.bankapi.dao.partner.PartnerService;
-import ru.homononsapiens.bankapi.dao.payment.Payment;
-import ru.homononsapiens.bankapi.dao.payment.PaymentService;
-import ru.homononsapiens.bankapi.dao.refill.Refill;
-import ru.homononsapiens.bankapi.dao.refill.RefillService;
+import ru.homononsapiens.bankapi.model.Account;
+import ru.homononsapiens.bankapi.service.AccountService;
+import ru.homononsapiens.bankapi.model.Card;
+import ru.homononsapiens.bankapi.service.CardService;
+import ru.homononsapiens.bankapi.model.Client;
+import ru.homononsapiens.bankapi.model.Partner;
+import ru.homononsapiens.bankapi.service.PartnerService;
+import ru.homononsapiens.bankapi.model.Payment;
+import ru.homononsapiens.bankapi.service.PaymentService;
+import ru.homononsapiens.bankapi.model.Refill;
+import ru.homononsapiens.bankapi.service.RefillService;
 
 import java.util.List;
 
@@ -51,8 +51,8 @@ public class ClientController {
      * Внесение вредств на счет
      */
     @PostMapping(path = "account/refill")
-    public void doRefill(@RequestBody Refill refill) {
-        refillService.add(refill);
+    public JsonNode doRefill(@RequestBody Refill refill) {
+        return refillService.add(refill);
     }
 
     /**
@@ -83,8 +83,7 @@ public class ClientController {
      * Перевод средств контрагенту
      */
     @PostMapping(path = "partner/payment")
-    public void doPayment(@RequestBody Payment payment) {
-        paymentService.add(payment);
+    public JsonNode doPayment(@RequestBody Payment payment) {
+        return paymentService.add(payment);
     }
-
 }
