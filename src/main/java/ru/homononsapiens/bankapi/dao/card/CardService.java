@@ -1,4 +1,4 @@
-package ru.homononsapiens.bankapi.DAO.card;
+package ru.homononsapiens.bankapi.dao.card;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
@@ -10,18 +10,19 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class CardService {
-    private CardDAO cardDAO;
+
+    private CardDao cardDao;
 
     public Card get(Long id) {
-        return cardDAO.findById(id);
+        return cardDao.findById(id);
     }
 
     public List<Card> getAll() {
-        return cardDAO.findAll();
+        return cardDao.findAll();
     }
 
     public List<Card> getAllByAccountId(Long accountId) {
-        return cardDAO.findAllByAccountId(accountId);
+        return cardDao.findAllByAccountId(accountId);
     }
 
     public JsonNode add(Card card) {
@@ -30,13 +31,13 @@ public class CardService {
 
         do {
             number = Util.generateCardNumber();
-            list = cardDAO.findByNumber(number);
+            list = cardDao.findByNumber(number);
         } while (!list.isEmpty());
 
         card.setNumber(number);
         card.setConfirmed(false);
 
-        if (cardDAO.save(card)) {
+        if (cardDao.save(card)) {
             return Util.getMessageAsJsonObject("OK", "Карта успешно создана");
         }
 
@@ -44,6 +45,6 @@ public class CardService {
     }
 
     public void confirm(Card card) {
-        cardDAO.confirm(card.getId());
+        cardDao.confirm(card.getId());
     }
 }

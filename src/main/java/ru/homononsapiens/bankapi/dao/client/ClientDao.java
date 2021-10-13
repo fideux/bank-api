@@ -1,16 +1,16 @@
-package ru.homononsapiens.bankapi.DAO.client;
+package ru.homononsapiens.bankapi.dao.client;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
-import ru.homononsapiens.bankapi.DAO.DAO;
-import ru.homononsapiens.bankapi.DAO.HibernateSessionFactory;
-import ru.homononsapiens.bankapi.DAO.card.Card;
+import ru.homononsapiens.bankapi.dao.Dao;
+import ru.homononsapiens.bankapi.dao.HibernateSessionFactory;
 
 import java.util.List;
 
 @Repository
-public class ClientDAO implements DAO<Client, Long> {
+public class ClientDao implements Dao<Client, Long> {
+
     @Override
     public List<Client> findAll() {
         return HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Client", Client.class).list();

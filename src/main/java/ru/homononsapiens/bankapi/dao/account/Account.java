@@ -1,9 +1,7 @@
-package ru.homononsapiens.bankapi.DAO.account;
+package ru.homononsapiens.bankapi.dao.account;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import ru.homononsapiens.bankapi.DAO.DAO;
 
 import javax.persistence.*;
 

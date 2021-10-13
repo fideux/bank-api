@@ -26,7 +26,7 @@
 <!--        <property name="hbm2ddl.auto">create</property>-->
 
 
-<!--        <mapping class="ru.homononsapiens.bankapi.DAO.account.Account" />-->
+<!--        <mapping class="ru.homononsapiens.bankapi.dao.account.Account" />-->
 
     </session-factory>
 

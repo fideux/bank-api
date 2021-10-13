@@ -1,11 +1,8 @@
-package ru.homononsapiens.bankapi.DAO.client;
+package ru.homononsapiens.bankapi.dao.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.homononsapiens.bankapi.DAO.account.Account;
-import ru.homononsapiens.bankapi.DAO.card.Card;
-import ru.homononsapiens.bankapi.DAO.card.CardDAO;
 import ru.homononsapiens.bankapi.utils.Util;
 
 import java.util.List;
@@ -14,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ClientService {
 
-    private ClientDAO clientDao;
+    private ClientDao clientDao;
 
     public List<Client> findAll() {
         return clientDao.findAll();

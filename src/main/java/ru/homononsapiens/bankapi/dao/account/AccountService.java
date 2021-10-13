@@ -1,10 +1,9 @@
-package ru.homononsapiens.bankapi.DAO.account;
+package ru.homononsapiens.bankapi.dao.account;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.homononsapiens.bankapi.DAO.operation.Operation;
-import ru.homononsapiens.bankapi.DAO.card.Card;
+import ru.homononsapiens.bankapi.dao.card.Card;
 import ru.homononsapiens.bankapi.utils.Util;
 
 import java.util.List;
@@ -12,18 +11,19 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class AccountService {
-    private AccountDAO accountDAO;
+
+    private AccountDao accountDao;
 
     public Account get(Long id) {
-        return accountDAO.findById(id);
+        return accountDao.findById(id);
     }
 
     public List<Account> getAll() {
-        return accountDAO.findAll();
+        return accountDao.findAll();
     }
 
     public JsonNode checkBalance(Long id) {
-        Account account = accountDAO.findById(id);
+        Account account = accountDao.findById(id);
         return (account == null)
                 ? Util.getMessageAsJsonObject("Error", "Счет не найден")
                 : Util.getMessageAsJsonObject("Balance", account.getBalance().toString());
@@ -35,12 +35,12 @@ public class AccountService {
 
         do {
             number = Util.generateAccountNumber();
-            list = accountDAO.findByNumber(number);
+            list = accountDao.findByNumber(number);
         } while (!list.isEmpty());
 
         account.setNumber(number);
 
-        if (accountDAO.save(account)) {
+        if (accountDao.save(account)) {
             return Util.getMessageAsJsonObject("OK", "Счет успешно открыт");
         }
         return Util.getMessageAsJsonObject("Error", "Ошибка при создании счета");

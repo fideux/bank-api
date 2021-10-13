@@ -1,4 +1,4 @@
-package ru.homononsapiens.bankapi.DAO.card;
+package ru.homononsapiens.bankapi.dao.refill;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,18 +9,18 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "operations")
 @ToString
-@Table(name = "cards")
-public class Card {
+public class Refill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String number;
+    private Long amount;
 
     @Column(name = "account_id")
     private Long accountId;
 
-    private Boolean confirmed = false;
+    private String status = "waiting";
 }

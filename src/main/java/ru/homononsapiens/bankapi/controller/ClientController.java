@@ -3,12 +3,12 @@ package ru.homononsapiens.bankapi.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.homononsapiens.bankapi.DAO.account.Account;
-import ru.homononsapiens.bankapi.DAO.account.AccountService;
-import ru.homononsapiens.bankapi.DAO.card.Card;
-import ru.homononsapiens.bankapi.DAO.card.CardService;
-import ru.homononsapiens.bankapi.DAO.operation.Operation;
-import ru.homononsapiens.bankapi.DAO.operation.OperationService;
+import ru.homononsapiens.bankapi.dao.account.Account;
+import ru.homononsapiens.bankapi.dao.account.AccountService;
+import ru.homononsapiens.bankapi.dao.card.Card;
+import ru.homononsapiens.bankapi.dao.card.CardService;
+import ru.homononsapiens.bankapi.dao.refill.Refill;
+import ru.homononsapiens.bankapi.dao.refill.RefillService;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ClientController {
 
     private final AccountService accountService;
     private final CardService cardService;
-    private final OperationService operationService;
+    private final RefillService refillService;
 
     @PostMapping(path = "card/list")
     public List<Card> getCards(@RequestBody Card card) {
@@ -42,7 +42,7 @@ public class ClientController {
     }
 
     @PutMapping(path = "account/put")
-    public void topUpBalance(@RequestBody Operation operation) {
-        operationService.add(operation);
+    public void topUpBalance(@RequestBody Refill refill) {
+        refillService.add(refill);
     }
 }

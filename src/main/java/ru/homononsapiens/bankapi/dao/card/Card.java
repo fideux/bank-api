@@ -1,27 +1,26 @@
-package ru.homononsapiens.bankapi.DAO.operation;
+package ru.homononsapiens.bankapi.dao.card;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "operations")
 @ToString
-public class Operation {
+@Table(name = "cards")
+public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long amount;
+    private String number;
 
     @Column(name = "account_id")
     private Long accountId;
 
-    private String status = "waiting";
+    private Boolean confirmed = false;
 }

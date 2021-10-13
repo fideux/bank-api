@@ -1,6 +1,5 @@
-package ru.homononsapiens.bankapi.DAO.client;
+package ru.homononsapiens.bankapi.dao.client;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

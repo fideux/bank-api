@@ -1,14 +1,15 @@
-package ru.homononsapiens.bankapi.DAO;
+package ru.homononsapiens.bankapi.dao;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import ru.homononsapiens.bankapi.DAO.account.Account;
-import ru.homononsapiens.bankapi.DAO.card.Card;
-import ru.homononsapiens.bankapi.DAO.client.Client;
-import ru.homononsapiens.bankapi.DAO.operation.Operation;
+import ru.homononsapiens.bankapi.dao.account.Account;
+import ru.homononsapiens.bankapi.dao.card.Card;
+import ru.homononsapiens.bankapi.dao.client.Client;
+import ru.homononsapiens.bankapi.dao.refill.Refill;
 
 public class HibernateSessionFactory {
+
     private static SessionFactory sessionFactory;
 
     private HibernateSessionFactory() {}
@@ -19,7 +20,7 @@ public class HibernateSessionFactory {
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(Card.class);
                 configuration.addAnnotatedClass(Account.class);
-                configuration.addAnnotatedClass(Operation.class);
+                configuration.addAnnotatedClass(Refill.class);
                 configuration.addAnnotatedClass(Client.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
