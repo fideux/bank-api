@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 import ru.homononsapiens.bankapi.dao.account.Account;
 import ru.homononsapiens.bankapi.dao.card.Card;
 import ru.homononsapiens.bankapi.dao.client.Client;
+import ru.homononsapiens.bankapi.dao.partner.Partner;
+import ru.homononsapiens.bankapi.dao.payment.Payment;
 import ru.homononsapiens.bankapi.dao.refill.Refill;
 
 public class HibernateSessionFactory {
@@ -22,6 +24,8 @@ public class HibernateSessionFactory {
                 configuration.addAnnotatedClass(Account.class);
                 configuration.addAnnotatedClass(Refill.class);
                 configuration.addAnnotatedClass(Client.class);
+                configuration.addAnnotatedClass(Partner.class);
+                configuration.addAnnotatedClass(Payment.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 

@@ -3,7 +3,6 @@ package ru.homononsapiens.bankapi.dao.client;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 import java.sql.Date;
 

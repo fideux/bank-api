@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.homononsapiens.bankapi.utils.Util;
-
 import java.util.List;
 
 @Service
@@ -13,11 +12,11 @@ public class ClientService {
 
     private ClientDao clientDao;
 
-    public List<Client> findAll() {
+    public List<Client> getAll() {
         return clientDao.findAll();
     }
 
-    public JsonNode save(Client client) {
+    public JsonNode add(Client client) {
         if (clientDao.save(client)) {
             return Util.getMessageAsJsonObject("OK", "Клиент успешно создан");
         }

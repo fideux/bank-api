@@ -21,8 +21,8 @@ public class CardService {
         return cardDao.findAll();
     }
 
-    public List<Card> getAllByAccountId(Long accountId) {
-        return cardDao.findAllByAccountId(accountId);
+    public List<Card> getAllByClientId(Long clientId) {
+        return cardDao.findAllByClientId(clientId);
     }
 
     public JsonNode add(Card card) {

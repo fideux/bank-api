@@ -16,10 +16,10 @@ public class CardDao implements Dao<Card, Long> {
         return HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Card", Card.class).list();
     }
 
-    public List<Card> findAllByAccountId(Long accountId) {
+    public List<Card> findAllByClientId(Long clientId) {
         return HibernateSessionFactory.getSessionFactory().openSession()
-                .createQuery("From Card where confirmed = true and account_id = :account_id", Card.class)
-                .setParameter("account_id", accountId).list();
+                .createQuery("select c FROM Card AS c, Account AS a WHERE a.clientId = :clientId AND  a.id = c.accountId AND c.confirmed = true", Card.class)
+                .setParameter("clientId", clientId).list();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CardDao implements Dao<Card, Long> {
     }
 
     public List<Card> findByNumber(String number) {
-        return HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Card where number = :number").setParameter("number", number).list();
+        return HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Card where number = :number").setParameter("number", number).list();
     }
 
     @Override

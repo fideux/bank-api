@@ -5,7 +5,6 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.homononsapiens.bankapi.dao.Dao;
 import ru.homononsapiens.bankapi.dao.HibernateSessionFactory;
-
 import java.util.List;
 
 @Repository

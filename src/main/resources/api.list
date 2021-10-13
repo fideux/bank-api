@@ -1,0 +1,14 @@
+{
+    "Выпуск новой карты по счету": "http://localhost:8080/api/client/card/add",
+    "Просмотр списка карт": "http://localhost:8080/api/client/card/list",
+    "Внесение вредств на счет": "http://localhost:8080/api/client/account/refill",
+    "Проверка баланса счета": "http://localhost:8080/api/client/account/balance",
+    "Добавление контрагента": "http://localhost:8080/api/client/partner/add",
+    "Просмотр контрагентов": "http://localhost:8080/api/client/partner/list",
+    "Перевод средств контрагенту": "http://localhost:8080/api/client/partner/payment",
+
+
+
+
+    "": "http://localhost:8080/api/",
+}

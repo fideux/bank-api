@@ -9,9 +9,10 @@ import ru.homononsapiens.bankapi.dao.card.Card;
 import ru.homononsapiens.bankapi.dao.card.CardService;
 import ru.homononsapiens.bankapi.dao.client.Client;
 import ru.homononsapiens.bankapi.dao.client.ClientService;
+import ru.homononsapiens.bankapi.dao.payment.Payment;
+import ru.homononsapiens.bankapi.dao.payment.PaymentService;
 import ru.homononsapiens.bankapi.dao.refill.Refill;
 import ru.homononsapiens.bankapi.dao.refill.RefillService;
-
 import java.util.List;
 
 @RestController
@@ -23,39 +24,85 @@ public class EmployeeController {
     private final AccountService accountService;
     private final CardService cardService;
     private final RefillService refillService;
+    private final PaymentService paymentService;
 
-    @PutMapping(path = "add")
-    public JsonNode list(@RequestBody Client client) {
-        return clientService.save(client);
+    /**
+     * Добавление нового клиента
+     */
+    @PostMapping(path = "add")
+    public JsonNode addClient(@RequestBody Client client) {
+        return clientService.add(client);
     }
 
-    @PutMapping(path = "account/open")
-    public JsonNode open(@RequestBody Account account) {
+    /**
+     * Открытие счета
+     */
+    @PostMapping(path = "account/open")
+    public JsonNode addAccount(@RequestBody Account account) {
         return accountService.add(account);
     }
 
+    /**
+     * Подтверждение выпуска карты
+     */
     @PostMapping(path = "card/confirm")
-    public void cardConfirm(@RequestBody Card card) {
+    public void confirmCard(@RequestBody Card card) {
         cardService.confirm(card);
     }
 
-    @PostMapping(path = "operation/confirm")
-    public void operationConfirm(@RequestBody Refill refill) {
+    /**
+     * Подтверждение операции пополнения
+     */
+    @PostMapping(path = "refill/confirm")
+    public void confirmRefill(@RequestBody Refill refill) {
         refillService.confirm(refill);
     }
 
-    @GetMapping(path = "list")
-    public List<Client> list() {
-        return clientService.findAll();
+    /**
+     * Подтверждение операции перевода средств контрагенту
+     */
+    @PostMapping(path = "payment/confirm")
+    public void confirmPayment(@RequestBody Payment payment) {
+        paymentService.confirm(payment);
     }
 
+    /**
+     * Список клиентов
+     */
+    @GetMapping(path = "list")
+    public List<Client> getClients() {
+        return clientService.getAll();
+    }
+
+    /**
+     * Список счетов
+     */
+    @GetMapping(path = "account/list")
+    public List<Account> getAccounts() {
+        return accountService.getAll();
+    }
+
+    /**
+     * Список выпущенных карт
+     */
     @GetMapping(path = "card/list")
-    public List<Card> cardList() {
+    public List<Card> getCards() {
         return cardService.getAll();
     }
 
-    @GetMapping(path = "operation/list")
-    public List<Refill> operationsList() {
+    /**
+     * Список операций пополнений
+     */
+    @GetMapping(path = "refill/list")
+    public List<Refill> getRefills() {
         return refillService.getAll();
+    }
+
+    /**
+     * Список операций перевода средств контрагенту
+     */
+    @GetMapping(path = "payment/list")
+    public List<Payment> getPayments() {
+        return paymentService.getAll();
     }
 }
