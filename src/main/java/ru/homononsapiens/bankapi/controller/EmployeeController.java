@@ -31,7 +31,7 @@ public class EmployeeController {
 
     @PutMapping(path = "account/open")
     public JsonNode open(@RequestBody Account account) {
-        return accountService.save(account);
+        return accountService.add(account);
     }
 
     @PostMapping(path = "card/confirm")
@@ -51,11 +51,11 @@ public class EmployeeController {
 
     @GetMapping(path = "card/list")
     public List<Card> cardList() {
-        return cardService.findAll();
+        return cardService.getAll();
     }
 
     @GetMapping(path = "operation/list")
     public List<Operation> operationsList() {
-        return operationService.findAll();
+        return operationService.getAll();
     }
 }

@@ -15,11 +15,11 @@ import java.util.List;
 public class OperationService {
     private OperationDAO operationDAO;
 
-    public List<Operation> findAll() {
+    public List<Operation> getAll() {
         return operationDAO.findAll();
     }
 
-    public void save(Operation operation) {
+    public void add(Operation operation) {
         operation.setStatus("waiting");
         operationDAO.save(operation);
     }

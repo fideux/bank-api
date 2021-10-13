@@ -3,7 +3,6 @@ package ru.homononsapiens.bankapi.DAO.card;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.homononsapiens.bankapi.DAO.client.Client;
 import ru.homononsapiens.bankapi.utils.Util;
 
 import java.util.List;
@@ -17,15 +16,15 @@ public class CardService {
         return cardDAO.findById(id);
     }
 
-    public List<Card> findAll() {
+    public List<Card> getAll() {
         return cardDAO.findAll();
     }
 
-    public List<Card> findAllByAccountId(Long accountId) {
+    public List<Card> getAllByAccountId(Long accountId) {
         return cardDAO.findAllByAccountId(accountId);
     }
 
-    public JsonNode save(Card card) {
+    public JsonNode add(Card card) {
         String number;
         List<Card> list;
 

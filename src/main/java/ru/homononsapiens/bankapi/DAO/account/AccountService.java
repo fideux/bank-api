@@ -14,22 +14,22 @@ import java.util.List;
 public class AccountService {
     private AccountDAO accountDAO;
 
-    public Account find(Long id) {
+    public Account get(Long id) {
         return accountDAO.findById(id);
     }
 
-    public List<Account> findAll() {
+    public List<Account> getAll() {
         return accountDAO.findAll();
     }
 
-    public JsonNode checkBalanceByAccountId(Long id) {
+    public JsonNode checkBalance(Long id) {
         Account account = accountDAO.findById(id);
         return (account == null)
                 ? Util.getMessageAsJsonObject("Error", "Счет не найден")
                 : Util.getMessageAsJsonObject("Balance", account.getBalance().toString());
     }
 
-    public JsonNode save(Account account) {
+    public JsonNode add(Account account) {
         String number;
         List<Card> list;
 
