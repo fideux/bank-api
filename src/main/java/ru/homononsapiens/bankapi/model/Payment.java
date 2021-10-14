@@ -2,7 +2,7 @@ package ru.homononsapiens.bankapi.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Table(name = "payments")
-@ToString
 public class Payment {
 
     @Id
@@ -29,4 +28,8 @@ public class Payment {
     private String purpose;
 
     private String status = "waiting";
+
+    public void setStatus(String status) {
+        this.status = "waiting";
+    }
 }

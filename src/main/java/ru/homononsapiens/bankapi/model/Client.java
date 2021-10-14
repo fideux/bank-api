@@ -2,14 +2,13 @@ package ru.homononsapiens.bankapi.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "clients")
 public class Client {
 

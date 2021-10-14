@@ -3,6 +3,7 @@ package ru.homononsapiens.bankapi.dao;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import ru.homononsapiens.bankapi.model.Payment;
+import ru.homononsapiens.bankapi.utils.HibernateSessionFactory;
 
 import java.util.List;
 
@@ -20,21 +21,35 @@ public class PaymentDao extends AbstractDao<Payment, Long> {
     }
 
     public boolean confirm(Long id) {
-        Payment payment = this.get(id);
-        if (payment == null || !payment.getStatus().equals("waiting")) {
-            return false;
-        }
-
         int result = 0;
         try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
             session.beginTransaction();
-            session.createQuery("update Payment set status = 'confirmed' where id = :id").setParameter("id", id).executeUpdate();
-            result = session.createQuery("update Account set balance = balance - :amount where id = :id and balance - :amount >= 0")
-                    .setParameter("amount", payment.getAmount())
-                    .setParameter("id", payment.getAccountId())
+            result = session.createQuery("update Payment set status = 'confirmed' where id = :id and status = 'waiting'")
+                    .setParameter("id", id)
                     .executeUpdate();
             session.getTransaction().commit();
         }
-        return (result > 0) ? true : false;
+        return result > 0 ? true : false;
+    }
+
+    public Long save(Payment payment) {
+        Long id = null;
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            int result = session.createQuery("update Account set balance = balance - :amount where id = :accountId")
+                    .setParameter("amount", payment.getAmount())
+                    .setParameter("accountId", payment.getAccountId())
+                    .executeUpdate();
+            if (result == 1) {
+                id = (Long) session.save(payment);
+                session.getTransaction().commit();
+            } else {
+                session.getTransaction().rollback();
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 }

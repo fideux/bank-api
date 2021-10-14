@@ -27,28 +27,17 @@ public class CardService {
         return cardDao.findAllByClientId(clientId);
     }
 
-    public JsonNode add(Card card) {
+    public Long add(Long accountId) {
+        // Генерация уникального номера карты
         String number;
-        List<Card> list;
-
         do {
             number = Util.generateCardNumber();
-            list = cardDao.findByNumber(number);
-        } while (!list.isEmpty());
+        } while (cardDao.isExistsByNumber(number));
 
-        card.setNumber(number);
-        card.setConfirmed(false);
-
-        if (cardDao.save(card)) {
-            return Util.getMessageAsJsonObject("OK", "Запрос на выпуск карты создан. Ожидайте подтверждения");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при выпуске карты");
+        return cardDao.save(new Card(number, accountId));
     }
 
-    public JsonNode confirm(Card card) {
-        if (cardDao.confirm(card.getId())) {
-            return Util.getMessageAsJsonObject("OK", "Карта успешно выпущена");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при выпуске карты");
+    public boolean confirm(Long cardId) {
+        return cardDao.confirm(cardId);
     }
 }

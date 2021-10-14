@@ -19,18 +19,11 @@ public class RefillService {
         return refillDao.getAll();
     }
 
-    public JsonNode add(Refill refill) {
-        refill.setStatus("waiting");
-        if (refillDao.save(refill)) {
-            return Util.getMessageAsJsonObject("OK", "Запрос на пополнение успешно создан. Ожидайте подтверждения");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при создании запроса на пополнение");
+    public Long add(Refill refill) {
+        return refillDao.save(refill);
     }
 
-    public JsonNode confirm(Refill refill) {
-        if (refillDao.confirm(refill.getId())) {
-            return Util.getMessageAsJsonObject("OK", "Запрос на пополнение успешно подтвержден");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при подтверждении запроса на пополнение");
+    public boolean confirm(Long id) {
+        return refillDao.confirm(id);
     }
 }

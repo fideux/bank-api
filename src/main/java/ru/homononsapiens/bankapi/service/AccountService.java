@@ -1,13 +1,12 @@
 package ru.homononsapiens.bankapi.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.homononsapiens.bankapi.model.Account;
 import ru.homononsapiens.bankapi.dao.AccountDao;
-import ru.homononsapiens.bankapi.model.Card;
+import ru.homononsapiens.bankapi.model.Account;
 import ru.homononsapiens.bankapi.utils.Util;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -24,27 +23,19 @@ public class AccountService {
         return accountDao.getAll();
     }
 
-    public JsonNode checkBalance(Long id) {
+    public BigDecimal getBalance(Long id) {
         Account account = accountDao.get(id);
-        return (account == null)
-                ? Util.getMessageAsJsonObject("Error", "Счет не найден")
-                : Util.getMessageAsJsonObject("Balance", account.getBalance().toString());
+        return (account != null) ? accountDao.get(id).getBalance() : null;
     }
 
-    public JsonNode add(Account account) {
+    public Long add(Account account) {
+        // Генерация уникального номера счета
         String number;
-        List<Card> list;
-
         do {
             number = Util.generateAccountNumber();
-            list = accountDao.findByNumber(number);
-        } while (!list.isEmpty());
+        } while (accountDao.isExistsByNumber(number));
 
         account.setNumber(number);
-
-        if (accountDao.save(account)) {
-            return Util.getMessageAsJsonObject("OK", "Счет успешно открыт");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при создании счета");
+        return accountDao.save(account);
     }
 }

@@ -3,6 +3,7 @@ package ru.homononsapiens.bankapi.dao;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import ru.homononsapiens.bankapi.model.Card;
+import ru.homononsapiens.bankapi.utils.HibernateSessionFactory;
 
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class CardDao extends AbstractDao<Card, Long> {
         return HibernateSessionFactory.getSessionFactory().openSession().get(Card.class, id);
     }
 
-    public List<Card> findByNumber(String number) {
-        return HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Card where number = :number").setParameter("number", number).list();
+    public boolean isExistsByNumber(String number) {
+        List<Card> cards = HibernateSessionFactory.getSessionFactory().openSession().createQuery("from Card where number = :number").setParameter("number", number).getResultList();
+        return (cards.isEmpty()) ? false : true;
     }
 
 

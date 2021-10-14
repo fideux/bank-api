@@ -1,17 +1,21 @@
 package ru.homononsapiens.bankapi.dao;
 
 import org.hibernate.Session;
+import ru.homononsapiens.bankapi.utils.HibernateSessionFactory;
 
 public abstract class AbstractDao<E, K> implements Dao<E, K> {
 
     @Override
-    public boolean save(E entity) {
+    public Long save(E entity) {
+        Long id = null;
         try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
             session.beginTransaction();
-            session.save(entity);
+            id = (Long) session.save(entity);
             session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            e.printStackTrace();
         }
-        return true;
+        return id;
     }
 
     @Override

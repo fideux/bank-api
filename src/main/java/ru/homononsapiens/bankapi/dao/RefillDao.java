@@ -3,6 +3,7 @@ package ru.homononsapiens.bankapi.dao;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import ru.homononsapiens.bankapi.model.Refill;
+import ru.homononsapiens.bankapi.utils.HibernateSessionFactory;
 
 import java.util.List;
 

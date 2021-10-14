@@ -22,10 +22,7 @@ public class PartnerService {
         return partnerDao.findAllByClientId(clientId);
     }
 
-    public JsonNode add(Partner partner) {
-        if (partnerDao.save(partner)) {
-            return Util.getMessageAsJsonObject("OK", "Контрагент успешно создан");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при создании контрагента");
+    public Long add(Partner partner) {
+        return partnerDao.save(partner);
     }
 }

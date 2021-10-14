@@ -18,10 +18,7 @@ public class ClientService {
         return clientDao.getAll();
     }
 
-    public JsonNode add(Client client) {
-        if (clientDao.save(client)) {
-            return Util.getMessageAsJsonObject("OK", "Клиент успешно создан");
-        }
-        return Util.getMessageAsJsonObject("Error", "Ошибка при создании клиента");
+    public Long add(Client client) {
+        return clientDao.save(client);
     }
 }

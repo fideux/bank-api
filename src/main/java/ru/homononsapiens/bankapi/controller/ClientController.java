@@ -1,23 +1,22 @@
 package ru.homononsapiens.bankapi.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.homononsapiens.bankapi.model.Account;
-import ru.homononsapiens.bankapi.service.AccountService;
 import ru.homononsapiens.bankapi.model.Card;
-import ru.homononsapiens.bankapi.service.CardService;
-import ru.homononsapiens.bankapi.model.Client;
 import ru.homononsapiens.bankapi.model.Partner;
-import ru.homononsapiens.bankapi.service.PartnerService;
 import ru.homononsapiens.bankapi.model.Payment;
-import ru.homononsapiens.bankapi.service.PaymentService;
 import ru.homononsapiens.bankapi.model.Refill;
-import ru.homononsapiens.bankapi.service.RefillService;
+import ru.homononsapiens.bankapi.service.*;
+import ru.homononsapiens.bankapi.utils.BalanceResponse;
+import ru.homononsapiens.bankapi.utils.IdRequest;
+import ru.homononsapiens.bankapi.utils.IdResponse;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -35,55 +34,76 @@ public class ClientController {
      * Выпуск новой карты по счету
      */
     @PostMapping(path = "card/add")
-    public JsonNode addCard(@RequestBody Card card) {
-        return cardService.add(card);
+    public ResponseEntity<?> addCard(@RequestBody IdRequest accountId) {
+        Long id = cardService.add(accountId.getId());
+        return (id != null)
+                ? new ResponseEntity<>(new IdResponse(id), HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Просмотр списка подтвержденных карт клиента
      */
     @PostMapping(path = "card/list")
-    public List<Card> getCards(@RequestBody Client client) {
-        return cardService.getAllByClientId(client.getId());
+    public ResponseEntity<List<Card>> getCards(@RequestBody IdRequest clientId) {
+        List<Card> cards = cardService.getAllByClientId(clientId.getId());
+        return (cards != null) && !cards.isEmpty()
+                ? new ResponseEntity<>(cards, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
      * Внесение вредств на счет
      */
     @PostMapping(path = "account/refill")
-    public JsonNode doRefill(@RequestBody Refill refill) {
-        return refillService.add(refill);
+    public ResponseEntity<?> doRefill(@RequestBody Refill refill) {
+        Long id = refillService.add(refill);
+        return (id != null)
+                ? new ResponseEntity<>(new IdResponse(id), HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Проверка баланса счета
      */
     @PostMapping(path = "account/balance")
-    public JsonNode getAccountBalance(@RequestBody Account account) {
-        return accountService.checkBalance(account.getId());
+    public ResponseEntity<?> getAccountBalance(@RequestBody IdRequest accountId) {
+        BigDecimal balance = accountService.getBalance(accountId.getId());
+        return (balance != null)
+                ? new ResponseEntity<>(new BalanceResponse(balance), HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Добавление контрагента
      */
     @PostMapping(path = "partner/add")
-    public JsonNode addPartner(@RequestBody Partner partner) {
-        return partnerService.add(partner);
+    public ResponseEntity<?> addPartner(@RequestBody Partner partner) {
+        Long id = partnerService.add(partner);
+        return (id != null)
+                ? new ResponseEntity<>(new IdResponse(id), HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**
      * Просмотр контрагентов
      */
     @PostMapping(path = "partner/list")
-    public List<Partner> getPartners(@RequestBody Client client) {
-        return partnerService.getAllByClientId(client.getId());
+    public ResponseEntity<List<Partner>> getPartners(@RequestBody IdRequest clientId) {
+        List<Partner> partners = partnerService.getAllByClientId(clientId.getId());
+        return (partners != null) && !partners.isEmpty()
+                ? new ResponseEntity<>(partners, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
      * Перевод средств контрагенту
      */
     @PostMapping(path = "partner/payment")
-    public JsonNode doPayment(@RequestBody Payment payment) {
-        return paymentService.add(payment);
+    public ResponseEntity<?> doPayment(@RequestBody Payment payment) {
+        Long id = paymentService.add(payment);
+        return (id != null)
+                ? new ResponseEntity<>(new IdResponse(id), HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
