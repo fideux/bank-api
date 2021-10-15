@@ -1,7 +1,6 @@
 package ru.homononsapiens.bankapi.dao;
 
 import org.springframework.stereotype.Repository;
-import ru.homononsapiens.bankapi.model.Account;
 import ru.homononsapiens.bankapi.model.Client;
 import ru.homononsapiens.bankapi.utils.HibernateSessionFactory;
 

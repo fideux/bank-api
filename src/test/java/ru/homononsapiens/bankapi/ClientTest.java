@@ -112,7 +112,7 @@ public class ClientTest {
     public void doPaymentTest() throws Exception {
         mockMvc.perform(post("/api/client/partner/payment")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.format("{\"accountId\": 1,\"partnerId\": 1,\"purpose\": \"Штраф за...\",\"amount\": 90}")))
+                        .content(String.format("{\"accountId\": 1,\"partnerId\": 1,\"purpose\": \"Штраф за...\",\"amount\": 1}")))
                 .andDo(print()).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNotEmpty());
     }

@@ -1,15 +1,13 @@
 package ru.homononsapiens.bankapi.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.homononsapiens.bankapi.dao.AccountDao;
 import ru.homononsapiens.bankapi.dao.ClientDao;
 import ru.homononsapiens.bankapi.dao.PartnerDao;
+import ru.homononsapiens.bankapi.dao.PaymentDao;
 import ru.homononsapiens.bankapi.model.Account;
 import ru.homononsapiens.bankapi.model.Payment;
-import ru.homononsapiens.bankapi.dao.PaymentDao;
-import ru.homononsapiens.bankapi.utils.Util;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -48,6 +46,7 @@ public class PaymentService {
 
         Account account = accountDao.get(payment.getAccountId());
         if (account == null || account.getBalance().compareTo(payment.getAmount()) < 0) {
+            System.out.println("Нехватка средств на счете");
             return null;
         }
         return paymentDao.save(payment);

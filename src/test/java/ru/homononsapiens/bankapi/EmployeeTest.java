@@ -67,13 +67,13 @@ public class EmployeeTest {
     /**
      * Подтверждение операции пополнения
      */
-    @Test
-    public void confirmRefillTest() throws Exception {
-        mockMvc.perform(post("/api/employee/client/refill/confirm")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.format("{\"id\": %d}", 1)))
-                .andDo(print()).andExpect(status().isOk());
-    }
+//    @Test
+//    public void confirmRefillTest() throws Exception {
+//        mockMvc.perform(post("/api/employee/client/refill/confirm")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(String.format("{\"id\": %d}", 1)))
+//                .andDo(print()).andExpect(status().isOk());
+//    }
 
     /**
      * Список клиентов
