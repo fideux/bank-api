@@ -1,6 +1,7 @@
 package ru.homononsapiens.bankapi.dao;
 
 import org.springframework.stereotype.Repository;
+import ru.homononsapiens.bankapi.model.Client;
 import ru.homononsapiens.bankapi.model.Partner;
 import ru.homononsapiens.bankapi.utils.HibernateSessionFactory;
 
@@ -8,6 +9,12 @@ import java.util.List;
 
 @Repository
 public class PartnerDao extends AbstractDao<Partner, Long> {
+
+    @Override
+    public Partner get(Long id) {
+        return HibernateSessionFactory.getSessionFactory().openSession()
+                .get(Partner.class, id);
+    }
 
     @Override
     public List<Partner> getAll() {
